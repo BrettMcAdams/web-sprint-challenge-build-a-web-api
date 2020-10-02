@@ -5,14 +5,14 @@ const actionsModel = require('../helpers/actionModel');
 const router = express.Router();
 
 router.post('/', (req, res) => {
-    const actionsInfo = req.body
+    const info = req.body
     actionsModel
-    .insert(actionsInfo)
+    .insert(info)
     .then(() => {
         res.status(201).json(({message: "Your action was created."}))
     })
-    .catch(error => {
-        res.status(500).json({error, error: "There was an error creating a new action."})
+    .catch(err => {
+        res.status(500).json({err, err: "There was an error creating a new action."})
     })
 })
 
@@ -21,17 +21,17 @@ router.get('/', (req, res) => {
     .then(e => {
         res.status(200).json(e)
     })
-    .catch(error => {
-        console.log(error);
+    .catch(err => {
+        console.log(err);
         res.status(500).json({message: "Error fetching actions."})
     })
 })
 
 router.put('/:id', (req, res) => {
-    const actionsInfo = req.body
+    const info = req.body
     const {id} = req.params
     actionsModel
-    .update(id, actionsInfo)
+    .update(id, info)
     .then(e => {
         if(e){
             res.status(200).json({message: "The action has been updated."})
@@ -39,8 +39,8 @@ router.put('/:id', (req, res) => {
             res.status(404).json({message: "The action can't be found."})
         }
     })
-    .catch(error => {
-        res.status(500).json({error: "There was an error updating the action."})
+    .catch(err => {
+        res.status(500).json({err: "There was an error updating the action."})
     })
 })
 
@@ -54,8 +54,8 @@ router.delete('/:id', (req, res) => {
             res.status(404).json({message: "The action can not be found."})
         }
     })
-    .catch(error => {
-        console.log(error);
+    .catch(err => {
+        console.log(err);
         res.status(500).json({message: "Error deleting the character"})
     })
 })
